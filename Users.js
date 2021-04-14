@@ -22,7 +22,7 @@ var UserSchema = new Schema({
     name: String,
     username: { type: String, required: true, index: { unique: true }},
     password: { type: String, required: true, select: false },
-    recent_IP:{type:String, required: true}
+    recent_IP:{type:String}
 });
 
 UserSchema.pre('save', function(next) {
