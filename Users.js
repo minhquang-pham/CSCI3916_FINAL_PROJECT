@@ -5,20 +5,24 @@ var bcrypt = require('bcrypt-nodejs');
 
 mongoose.Promise = global.Promise;
 
-const uri = process.env.DB;
+mongoose.Promise = global.Promise;
 
-// mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}).
-// catch(err => console.log(err));
+//mongoose.connect(process..env.DB, { useNewUrlParser: true });
+try {
+    mongoose.connect( process.env.DB, {useNewUrlParser: true, useUnifiedTopology: true}, () =>
+        console.log("connected"));
+}catch (error) {
+    console.log("could not connect");
+}
+mongoose.set('useCreateIndex', true);
 
-// console.log("connected to mongo atlas (users)");
-
-    //console.log("could not connect");
 
 //user schema
 var UserSchema = new Schema({
     name: String,
     username: { type: String, required: true, index: { unique: true }},
-    password: { type: String, required: true, select: false }
+    password: { type: String, required: true, select: false },
+    recent_IP:{type:String, required: true}
 });
 
 UserSchema.pre('save', function(next) {
