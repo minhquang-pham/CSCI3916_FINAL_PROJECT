@@ -60,6 +60,7 @@ router.post('/signup', function(req, res) {
         user.username = req.body.username;
         user.password = req.body.password;
 
+
         user.save(function(err){
             if (err) {
                 if (err.code == 11000)
@@ -78,9 +79,10 @@ router.post('/signin', function (req, res) {
     var userNew = new User();
     userNew.username = req.body.username;
     userNew.password = req.body.password;
+    String ipAddress = request.getHeader("Remote_Addr");
 
     console.log(userNew);
-    
+
     User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
         if (err) {
             console.log(err);
@@ -92,7 +94,15 @@ router.post('/signin', function (req, res) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
                 res.json({success: true, token: 'JWT ' + token});
-            }
+                user.findOneAndUpdate({username: req.body.username}, {recent_IP: ipAddress}, function(err, user) {
+                    if(err){
+                        res.status(403).json({success:false, message: "Could not update ip"});
+                    }else{
+                        res.status(200).json({success: true, message: "Updated ip"});
+                    }
+                })
+
+                }
             else {
                 res.status(401).send({success: false, msg: 'Authentication failed.'});
             }
