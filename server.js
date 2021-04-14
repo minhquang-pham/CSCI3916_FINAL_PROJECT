@@ -16,11 +16,9 @@ var User = require('./Users');
 var Item = require('./Items');
 var Transaction = require('./Transactions');
 var mongoose = require('mongoose')
-var Movie = require('./Movies');
-var Review = require('./reviews');
-const { db } = require('./Movies');
-const Users = require('./Users');
-const reviews = require('./reviews');
+//const Users = require('./Users');
+
+
 
 var app = express();
 app.use(cors());
