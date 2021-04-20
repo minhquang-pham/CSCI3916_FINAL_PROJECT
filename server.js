@@ -92,7 +92,7 @@ router.post('/signin', function (req, res) {
             if (isMatch) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
-                res.json({success: true, token: 'JWT ' + token});
+
                 user.findOneAndUpdate({username: req.body.username}, {recent_IP: ipAddress}, function(err, user) {
                     if(err){
                         res.status(403).json({success:false, message: "Could not update ip"});
@@ -101,6 +101,8 @@ router.post('/signin', function (req, res) {
                     }
                 })
 
+                res.json({success: true, token: 'JWT ' + token});
+                
                 }
             else {
                 res.status(401).send({success: false, msg: 'Authentication failed.'});
