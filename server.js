@@ -139,6 +139,32 @@ router.route('/transaction')
         });
 
 
+router.route('/item')
+    .post(function (req, res) {
+        // post function
+        var item = new Item();
+
+        item.item_name = req.body.item_name;
+        item.price = req.body.price;
+        item.country_blacklist = req.body.country_blacklist;
+        item.item_id = req.body.item_id;
+
+        item.save(function (err) {
+            if (err) {
+                return res.json(err);
+            }
+            res.json({success: true, msg: 'Item saved.'});
+        })
+
+    })
+
+
+    .get(function (req, res) {
+        Item.find({}, function(err, item) {
+            res.json({Transaction: item});
+        })
+    });
+
 
 // // GET movies gets all the movies in the database
 // router.get('/movies', (req, res) => {
