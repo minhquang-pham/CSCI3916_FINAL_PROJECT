@@ -111,6 +111,19 @@ router.post('/signin', function (req, res) {
     })
 });
 
+//get and post for both items and transaction
+router.route('/transaction')
+        .post(authJwtController.isAuthenticated, function (req, res) {
+            // post function
+        })
+        .get(authJwtController.isAuthenticated, function (req, res) {
+            Transaction.find({}, function(err, transaction) {
+                res.json({Transaction: transaction});
+            })
+        });
+
+
+
 // // GET movies gets all the movies in the database
 // router.get('/movies', (req, res) => {
 //     Movie.find({}, function(err, movies) {
