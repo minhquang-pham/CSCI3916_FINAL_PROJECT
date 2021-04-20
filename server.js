@@ -121,6 +121,7 @@ router.route('/transaction')
             transaction.cart = req.body.cart;
             transaction.date = req.body.date;
             transaction.ip = req.body.ip;
+
             transaction.save(function(err){
                 if (err) {
                     return res.json(err);
