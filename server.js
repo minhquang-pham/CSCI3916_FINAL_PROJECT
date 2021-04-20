@@ -77,7 +77,7 @@ router.post('/signin', function (req, res) {
     var userNew = new User();
     userNew.username = req.body.username;
     userNew.password = req.body.password;
-    var ipAddress = request.connection.remoteAddress;
+    var ipAddress = req.socket.remoteAddress;
 
 
     console.log(userNew);
