@@ -115,7 +115,21 @@ router.post('/signin', function (req, res) {
 router.route('/transaction')
         .post(authJwtController.isAuthenticated, function (req, res) {
             // post function
-        })
+            var transaction = new Transaction();
+
+            transaction.id = req.body.id;
+            transaction.cart = req.body.cart;
+            transaction.date = req.body.date;
+            transaction.ip = req.body.ip;
+            transaction.save(function(err){
+                if (err) {
+                    return res.json(err);
+                }
+                res.json({success: true, msg: 'Transaction saved.'});
+
+            })
+
+
         .get(authJwtController.isAuthenticated, function (req, res) {
             Transaction.find({}, function(err, transaction) {
                 res.json({Transaction: transaction});
