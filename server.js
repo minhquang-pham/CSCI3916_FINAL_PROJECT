@@ -29,14 +29,14 @@ app.use(passport.initialize());
 
 var router = express.Router();
 
-mongoose.Promise = global.Promise;
+/*mongoose.Promise = global.Promise;
 const uri = process.env.DB;
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true}).
 catch(err => console.log(err));
 
 console.log("connected to mongo atlas (users)");
-
+*/
 // function getJSONObjectForMovie(req) {
 //     var json = {
 //         body: "No body"
