@@ -122,13 +122,14 @@ router.route('/transaction')
             transaction.date = req.body.date;
             transaction.ip = req.body.ip;
 
-            transaction.save(function(err){
+            transaction.save(function (err) {
                 if (err) {
                     return res.json(err);
                 }
                 res.json({success: true, msg: 'Transaction saved.'});
-
             })
+
+        })
 
 
         .get(authJwtController.isAuthenticated, function (req, res) {
