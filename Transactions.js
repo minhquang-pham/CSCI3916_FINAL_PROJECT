@@ -17,7 +17,7 @@ mongoose.set('useCreateIndex', true);
 var TransactionSchema = new Schema({
 
     id:{type:Number,required:true},
-    cart: [{type:String}],
+    cart: [String],
     date: {type:String},
     ip:{type:String}
 });
