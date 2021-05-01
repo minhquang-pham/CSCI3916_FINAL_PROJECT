@@ -148,6 +148,7 @@ router.route('/item')
         item.price = req.body.price;
         item.country_blacklist = req.body.country_blacklist;
         item.item_id = req.body.item_id;
+        item.imageUrl = req.body.imageUrl;
 
         item.save(function (err) {
             if (err) {
