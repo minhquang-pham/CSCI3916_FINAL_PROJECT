@@ -162,8 +162,16 @@ router.route('/item')
 
     .get(function (req, res) {
         Item.find({}, function(err, item) {
-            res.json({Transaction: item});
+            Item.aggregate()
+                .exec(function (err, item) {
+                    if (err) {
+                        res.status(500).send(err);
+                    } else {
+                        res.json(item);
+                    }
+                })
         })
+
     });
 
 
