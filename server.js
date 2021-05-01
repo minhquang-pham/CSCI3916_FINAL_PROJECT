@@ -161,15 +161,18 @@ router.route('/item')
 
 
     .get(function (req, res) {
-        Item.find({}, function(err, item) {
-            Item.aggregate()
-                .exec(function (err, item) {
-                    if (err) {
-                        res.status(500).send(err);
-                    } else {
-                        res.json(item);
-                    }
-                })
+        Item.findOne({item_id: req.params.item_id}, function (err, items){
+            if (err)  throw err;
+            else {
+                Item.aggregate()
+                    .exec(function (err, items){
+                        if (err) {
+                            res.status(500).send(err);
+                        } else {
+                            res.json(items);
+                        }
+                    })
+            }
         })
 
     });
