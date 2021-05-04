@@ -1,3 +1,34 @@
+Skip to content
+Search or jump to…
+
+Pull requests
+Issues
+Marketplace
+Explore
+
+@aikiDenver
+minhquang-pham
+/
+CSCI3916_FINAL_PROJECT
+forked from noodlelou/CSCI3916_FINAL_PROJECT
+0
+03
+Code
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+CSCI3916_FINAL_PROJECT/server.js /
+@minhquang-pham
+minhquang-pham Update server.js
+Latest commit 5ba7f76 37 minutes ago
+History
+3 contributors
+@aikiDenver@minhquang-pham@noodlelou
+392 lines (303 sloc)  10.9 KB
+
 /*
 CSC3916 Final Project
 File: Server.js
@@ -67,7 +98,6 @@ router.post('/signin', function (req, res) {
 
     function handleResponse(json) {
         console.log(json);
-        //return json
     }
 
     function getClientIp(req) {
@@ -77,13 +107,9 @@ router.post('/signin', function (req, res) {
 
     var geolocationParams = new GeolocationParams();
     geolocationParams.setIPAddress(getClientIp(req));
-    //geolocationParams.setFields('country_code2');
-    //console.log(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams)) ;
+    var ipdata = JSON.parse(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
 
-    var ipdata = ipgeolocationApi.getGeolocation(handleResponse, geolocationParams);
-
-    //console.log(userNew);
-    console.log(ipdata);
+    console.log(userNew);
 
     User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
         if (err) {
@@ -96,7 +122,7 @@ router.post('/signin', function (req, res) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
 
-                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipdata}, function(err, user) {
+                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipdata.country_code2}, function(err, user) {
                     if(err){
                         res.status(403).json({success:false, message: "Could not update ip"});
                     }else{
