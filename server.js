@@ -87,14 +87,14 @@ router.post('/signin', function (req, res) {
     function handleResponse(json) {
     console.log(json);
     }
-
-    var getClientAddress = function (req) {
-        return (req.headers['x-forwarded-for'] || '').split(',')[0] 
-        || req.connection.remoteAddress;
-    };
+    
+    function getClientIp(req) {
+    var ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
+    console.log('IP: ', ip);
+    }
     
     var geolocationParams = new GeolocationParams();
-    geolocationParams.setIPAddress(getClientAddress);
+    geolocationParams.setIPAddress(getClientIp(req));
     
     return res.json(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
 
