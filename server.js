@@ -70,6 +70,7 @@ router.post('/signin', function (req, res) {
     function handleResponse(json) {
         console.log(json.country_code2);
         ipdata = json.country_code2;
+        return ipdata;
     }
 
     function getClientIp(req) {
