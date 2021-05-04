@@ -80,11 +80,12 @@ router.post('/signup', function(req, res) {
 });
 
 router.post('/signin', function (req, res) {
-    var geolocationParams = new GeolocationParams();
+    //var geolocationParams = new GeolocationParams();
     var userNew = new User();
     userNew.username = req.body.username;
     userNew.password = req.body.password;
     //geolocationParams.setFields('country_code2');
+
     ipgeolocationApi.getGeolocation(req);
     return console.log(ipgeolocationApi);
 
