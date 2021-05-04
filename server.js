@@ -76,7 +76,8 @@ router.post('/signin', function (req, res) {
 
     var geolocationParams = new GeolocationParams();
     geolocationParams.setIPAddress(getClientIp(req));
-   //console.log(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams)) ;
+    geolocationParams.setFields('country_code2')
+   console.log(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams)) ;
 
     var ipdata = ipgeolocationApi.getGeolocation(handleResponse, geolocationParams);
 
@@ -94,7 +95,7 @@ router.post('/signin', function (req, res) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
 
-                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipdata.country_code2}, function(err, user) {
+                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipdata}, function(err, user) {
                     if(err){
                         res.status(403).json({success:false, message: "Could not update ip"});
                     }else{
