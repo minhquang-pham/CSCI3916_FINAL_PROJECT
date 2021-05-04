@@ -51,7 +51,7 @@ function getCode(req){
     geolocationParams.setIPAddress(getClientIp(req));
     geolocationParams.setFields('country_code2');
     var c_code = JSON.stringify(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
-    console.log("in getCode function" + c_code);
+    console.log("in getCode function " + c_code);
 
     return c_code;
 
@@ -98,6 +98,7 @@ router.post('/signin', function (req, res) {
      */
     var ipdata = getCode(req);
 
+    console.log("in login function " + ipdata);
     console.log(userNew);
 
     User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
@@ -111,7 +112,7 @@ router.post('/signin', function (req, res) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
 
-                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipdata.country_code2}, function(err, user) {
+                User.findOneAndUpdate({username: req.body.username}/*, {countryCode: ipdata.country_code2}*/ ,function(err, user) {
                     if(err){
                         res.status(403).json({success:false, message: "Could not update ip"});
                     }else{
