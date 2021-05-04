@@ -17,6 +17,8 @@ var Item = require('./Items');
 var Transaction = require('./Transactions');
 var mongoose = require('mongoose');
 var IPLookUp = require('ip-geolocation-api-javascript-sdk');
+var ipgeolocationApi = new IPLookUp("983d75b3fb804764b2ed02e89f037c5b", false);
+
 
 //const Users = require('./Users');
 
@@ -79,7 +81,8 @@ router.post('/signin', function (req, res) {
     var userNew = new User();
     userNew.username = req.body.username;
     userNew.password = req.body.password;
-    var ipAddress = req.socket.remoteAddress;
+    ipgeolocationApi.getGeolocation(handleResponse);
+
 
 
     console.log(userNew);
@@ -95,7 +98,8 @@ router.post('/signin', function (req, res) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
 
-                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipAddress}, function(err, user) {
+                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipgeolocationApi.country_code2
+                }, function(err, user) {
                     if(err){
                         res.status(403).json({success:false, message: "Could not update ip"});
                     }else{
