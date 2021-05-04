@@ -18,6 +18,8 @@ var Transaction = require('./Transactions');
 var mongoose = require('mongoose');
 var IPLookUp = require('ip-geolocation-api-javascript-sdk');
 var ipgeolocationApi = new IPLookUp("983d75b3fb804764b2ed02e89f037c5b", false);
+var Geolocation = require('ip-geolocation-api-javascript-sdk/GeolocationParams.js');
+
 
 
 //const Users = require('./Users');
@@ -78,43 +80,46 @@ router.post('/signup', function(req, res) {
 });
 
 router.post('/signin', function (req, res) {
+    var geolocationParams = new GeolocationParams();
     var userNew = new User();
     userNew.username = req.body.username;
     userNew.password = req.body.password;
+    //geolocationParams.setFields('country_code2');
     ipgeolocationApi.getGeolocation(req);
+    return console.log(ipgeolocationApi);
 
-
-
-    console.log(userNew);
-
-    User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
-        if (err) {
-            console.log(err);
-            res.send(err);
-        }
-
-        user.comparePassword(userNew.password, function(isMatch) {
-            if (isMatch) {
-                var userToken = { id: user.id, username: user.username };
-                var token = jwt.sign(userToken, process.env.SECRET_KEY);
-
-                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipgeolocationApi.country_code
-                }, function(err, user) {
-                    if(err){
-                        res.status(403).json({success:false, message: "Could not update ip"});
-                    }else{
-                        res.status(200).json({success: true, message: "Updated ip"});
-                    }
-                })
-
-                res.json({success: true, token: 'JWT ' + token});
-
-                }
-            else {
-                res.status(401).send({success: false, msg: 'Authentication failed.'});
-            }
-        })
-    })
+    //
+    //
+    // console.log(userNew);
+    //
+    // User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
+    //     if (err) {
+    //         console.log(err);
+    //         res.send(err);
+    //     }
+    //
+    //     user.comparePassword(userNew.password, function(isMatch) {
+    //         if (isMatch) {
+    //             var userToken = { id: user.id, username: user.username };
+    //             var token = jwt.sign(userToken, process.env.SECRET_KEY);
+    //
+    //             User.findOneAndUpdate({username: req.body.username}, {countryCode: ipgeolocationApi.country_code2
+    //             }, function(err, user) {
+    //                 if(err){
+    //                     res.status(403).json({success:false, message: "Could not update ip"});
+    //                 }else{
+    //                     res.status(200).json({success: true, message: "Updated ip"});
+    //                 }
+    //             })
+    //
+    //             res.json({success: true, token: 'JWT ' + token});
+    //
+    //             }
+    //         else {
+    //             res.status(401).send({success: false, msg: 'Authentication failed.'});
+    //         }
+    //     })
+    // })
 });
 
 //get and post for both items and transaction
