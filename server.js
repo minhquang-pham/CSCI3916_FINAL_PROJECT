@@ -64,13 +64,10 @@ router.post('/signin', function (req, res) {
     var userNew = new User();
     userNew.username = req.body.username;
     userNew.password = req.body.password;
-    var ipdata;
 
 
     function handleResponse(json) {
         console.log(json.country_code2);
-        ipdata = json.country_code2;
-        return ipdata;
     }
 
     function getClientIp(req) {
@@ -98,7 +95,7 @@ router.post('/signin', function (req, res) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
 
-                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipdata}, function(err, user) {
+                User.findOneAndUpdate({username: req.body.username}, {countryCode: handleResponse.country_code2}, function(err, user) {
                     if(err){
                         res.status(403).json({success:false, message: "Could not update ip"});
                     }else{
