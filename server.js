@@ -85,9 +85,12 @@ router.post('/signin', function (req, res) {
     userNew.username = req.body.username;
     userNew.password = req.body.password;
     //geolocationParams.setFields('country_code2');
+    function handleResponse(json) {
+        console.log(json);
+    }
 
     ipgeolocationApi.getGeolocation(req);
-    return res.json(ipgeolocationApi.getGeolocation(req));
+    return res.json(ipgeolocationApi.getGeolocation(handleResponse));
 
     //
     //
