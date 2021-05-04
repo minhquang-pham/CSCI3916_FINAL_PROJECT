@@ -66,7 +66,7 @@ router.post('/signin', function (req, res) {
     userNew.password = req.body.password;
 
     function handleResponse(json) {
-        console.log(json);
+        console.log(json.country_code2);
     }
 
     function getClientIp(req) {
