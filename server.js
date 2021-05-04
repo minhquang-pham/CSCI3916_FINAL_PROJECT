@@ -1,3 +1,4 @@
+
 /*
 CSC3916 Final Project
 File: Server.js
@@ -65,9 +66,8 @@ router.post('/signin', function (req, res) {
     userNew.username = req.body.username;
     userNew.password = req.body.password;
 
-
     function handleResponse(json) {
-        console.log(json.country_code2);
+        console.log(json);
     }
 
     function getClientIp(req) {
@@ -78,9 +78,7 @@ router.post('/signin', function (req, res) {
     var geolocationParams = new GeolocationParams();
     geolocationParams.setIPAddress(getClientIp(req));
     geolocationParams.setFields('country_code2');
-    //ipgeolocationApi.getGeolocation(handleResponse, geolocationParams);
-    var temp = ipgeolocationApi.getGeolocation(handleResponse, geolocationParams);
-
+    var ipdata = JSON.parse(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
 
     console.log(userNew);
 
@@ -95,7 +93,7 @@ router.post('/signin', function (req, res) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
 
-                User.findOneAndUpdate({username: req.body.username}, {countryCode: handleResponse.country_code2}, function(err, user) {
+                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipdata.country_code2}, function(err, user) {
                     if(err){
                         res.status(403).json({success:false, message: "Could not update ip"});
                     }else{
