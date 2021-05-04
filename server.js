@@ -67,7 +67,7 @@ router.post('/signin', function (req, res) {
 
     function handleResponse(json) {
         console.log(json);
-        return json
+        //return json
     }
 
     function getClientIp(req) {
@@ -78,11 +78,9 @@ router.post('/signin', function (req, res) {
     var geolocationParams = new GeolocationParams();
     geolocationParams.setIPAddress(getClientIp(req));
     geolocationParams.setFields('country_code2')
-    let i;
-    console.log(ipgeolocationApi.getGeolocation(handleResponse(i), geolocationParams)) ;
-    console.log(i)
+    //console.log(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams)) ;
 
-    var ipdata = ipgeolocationApi.getGeolocation(handleResponse(i), geolocationParams);
+    var ipdata = ipgeolocationApi.getGeolocation(handleResponse, geolocationParams);
 
     //console.log(userNew);
     console.log(ipdata);
