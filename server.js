@@ -81,7 +81,7 @@ router.post('/signin', function (req, res) {
     var userNew = new User();
     userNew.username = req.body.username;
     userNew.password = req.body.password;
-    ipgeolocationApi.getGeolocation(handleResponse);
+    ipgeolocationApi.getGeolocation(req);
 
 
 
