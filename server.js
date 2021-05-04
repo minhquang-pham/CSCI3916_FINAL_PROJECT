@@ -90,6 +90,7 @@ router.post('/signin', function (req, res) {
     }
 
     ipgeolocationApi.getGeolocation(req);
+    console.log(handleResponse);
     return res.json(ipgeolocationApi.getGeolocation(handleResponse));
 
     //
