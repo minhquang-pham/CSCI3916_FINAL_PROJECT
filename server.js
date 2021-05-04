@@ -90,7 +90,7 @@ router.post('/signin', function (req, res) {
     
     function getClientIp(req) {
     var ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
-    console.log('IP: ', ip);
+    return ip;
     }
     
     var geolocationParams = new GeolocationParams();
