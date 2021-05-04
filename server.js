@@ -85,13 +85,13 @@ router.post('/signin', function (req, res) {
     var userNew = new User();
     userNew.username = req.body.username;
     userNew.password = req.body.password;
-    //geolocationParams.setFields('country_code2');
+    geolocationParams.setFields('country_code2');
     function handleResponse(json) {
         console.log(json);
     }
 
-    ipgeolocationApi.getGeolocation(req, geolocationParams);
-    console.log(ipgeolocationApi.getGeolocation(req, geolocationParams));
+    ipgeolocationApi.getGeolocation(handleResponse, geolocationParams);
+    console.log(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
     console.log(handleResponse);
     return res.json(ipgeolocationApi.getGeolocation(handleResponse));
 
