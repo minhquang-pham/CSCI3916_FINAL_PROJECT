@@ -51,7 +51,7 @@ function getCode(req){
     geolocationParams.setIPAddress(getClientIp(req));
     geolocationParams.setFields('country_code2');
     var c_code = JSON.stringify(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
-    console.log(ipdata);
+    console.log(c_code);
 
     return c_code;
 
