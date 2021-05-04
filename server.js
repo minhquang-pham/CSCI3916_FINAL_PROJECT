@@ -79,7 +79,7 @@ router.post('/signin', function (req, res) {
        var geolocationParams = new GeolocationParams();
        geolocationParams.setIPAddress(getClientIp(req));
        geolocationParams.setFields('country_code2');
-       var ipdata = JSON.stringify(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
+       var c_code = JSON.stringify(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
        console.log(ipdata);
 
        return c_code;
