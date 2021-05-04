@@ -75,14 +75,16 @@ router.post('/signin', function (req, res) {
         return ip;
     }
 
-    fetch('https://extreme-ip-lookup.com/json/')
-        .then( res => res.json())
-        .then(response => {
-            console.log("Country: ", response.country);
-        })
-        .catch((data, status) => {
-            console.log('Request failed');
-        })
+   function getCode(){
+       var geolocationParams = new GeolocationParams();
+       geolocationParams.setIPAddress(getClientIp(req));
+       geolocationParams.setFields('country_code2');
+       var ipdata = JSON.stringify(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
+       console.log(ipdata);
+
+       return c_code;
+
+   }
 
 
     /*
@@ -94,6 +96,7 @@ router.post('/signin', function (req, res) {
     console.log(ipdata);
 
      */
+    var ipdata = getCode();
 
     console.log(userNew);
 
