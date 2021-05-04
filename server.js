@@ -46,7 +46,7 @@ function getClientIp(req) {
     return ip;
 }
 
-function getCode(){
+function getCode(req){
     var geolocationParams = new GeolocationParams();
     geolocationParams.setIPAddress(getClientIp(req));
     geolocationParams.setFields('country_code2');
@@ -96,7 +96,7 @@ router.post('/signin', function (req, res) {
     console.log(ipdata);
 
      */
-    var ipdata = getCode();
+    var ipdata = getCode(req);
 
     console.log(userNew);
 
