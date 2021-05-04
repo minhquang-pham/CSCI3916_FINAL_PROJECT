@@ -98,7 +98,7 @@ router.post('/signin', function (req, res) {
                 var userToken = { id: user.id, username: user.username };
                 var token = jwt.sign(userToken, process.env.SECRET_KEY);
 
-                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipgeolocationApi.country_code2
+                User.findOneAndUpdate({username: req.body.username}, {countryCode: ipgeolocationApi.country_code
                 }, function(err, user) {
                     if(err){
                         res.status(403).json({success:false, message: "Could not update ip"});
