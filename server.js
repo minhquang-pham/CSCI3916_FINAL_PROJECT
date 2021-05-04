@@ -37,6 +37,27 @@ app.use(passport.initialize());
 var router = express.Router();
 
 
+function handleResponse(json) {
+    console.log(json);
+}
+
+function getClientIp(req) {
+    var ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
+    return ip;
+}
+
+function getCode(){
+    var geolocationParams = new GeolocationParams();
+    geolocationParams.setIPAddress(getClientIp(req));
+    geolocationParams.setFields('country_code2');
+    var c_code = JSON.stringify(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
+    console.log(ipdata);
+
+    return c_code;
+
+}
+
+
 router.post('/signup', function(req, res) {
     if (!req.body.username || !req.body.password) {
         res.send({success: false, msg: 'Please include both username and password to signup.'})
@@ -66,28 +87,7 @@ router.post('/signin', function (req, res) {
     userNew.username = req.body.username;
     userNew.password = req.body.password;
 
-    function handleResponse(json) {
-        console.log(json);
-    }
-
-    function getClientIp(req) {
-        var ip = req.headers['x-forwarded-for'] ? req.headers['x-forwarded-for'].split(',')[0] : req.connection.remoteAddress;
-        return ip;
-    }
-
-   function getCode(){
-       var geolocationParams = new GeolocationParams();
-       geolocationParams.setIPAddress(getClientIp(req));
-       geolocationParams.setFields('country_code2');
-       var c_code = JSON.stringify(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
-       console.log(ipdata);
-
-       return c_code;
-
-   }
-
-
-    /*
+        /*
 
     var geolocationParams = new GeolocationParams();
     geolocationParams.setIPAddress(getClientIp(req));
