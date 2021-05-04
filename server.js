@@ -66,7 +66,7 @@ router.post('/signin', function (req, res) {
     userNew.password = req.body.password;
 
     function handleResponse(json) {
-        console.log(json);
+        //console.log(json);
     }
 
     function getClientIp(req) {
@@ -78,7 +78,8 @@ router.post('/signin', function (req, res) {
     geolocationParams.setIPAddress(getClientIp(req));
     var ipdata = JSON.parse(ipgeolocationApi.getGeolocation(handleResponse, geolocationParams));
 
-    console.log(userNew);
+    //console.log(userNew);
+    console.log(ipdata);
 
     User.findOne({ username: userNew.username }).select('name username password').exec(function(err, user) {
         if (err) {
