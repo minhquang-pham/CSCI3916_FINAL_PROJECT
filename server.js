@@ -66,7 +66,7 @@ router.post('/signin', function (req, res) {
     userNew.password = req.body.password;
 
     function handleResponse(json) {
-        //console.log(json);
+        console.log(json);
         return json
     }
 
@@ -82,7 +82,7 @@ router.post('/signin', function (req, res) {
     console.log(ipgeolocationApi.getGeolocation(handleResponse(i), geolocationParams)) ;
     console.log(i)
 
-    var ipdata = ipgeolocationApi.getGeolocation(handleResponse, geolocationParams);
+    var ipdata = ipgeolocationApi.getGeolocation(handleResponse(i), geolocationParams);
 
     //console.log(userNew);
     console.log(ipdata);
